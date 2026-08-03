@@ -11,18 +11,22 @@ GitHub stars GitHub forks License Last Commit GitHub Actions
 新增：每日两次签到尝试：分别在北京时间早上 9 点和下午 3 点左右尝试签到，增加成功率。
 新增：随机延迟执行：每次签到前加入随机延迟，模拟人工操作，降低被检测风险。
 GitHub Actions 托管：一键配置后，脚本每天自动运行，实现真正的“一劳永逸”。
+
 📋 使用指南
 1️⃣ Fork 项目
 点击右上角的 Fork 按钮，将本项目复制到自己的 GitHub 仓库。
+
 🛠️ 获取 登录信息
 打开抓包工具,例如:Fiddle等(因为是https的接口所以需要安装证书,具体工具使用步骤可自行百度)。
 找到接口 https://api.trae.cn/trae/api/v2/ug/checkin_credits/claim 的请求信息。
 在请求头中找到authorization的值,可能是以Cloud-IDE-JWT开头的,去掉Cloud-IDE-JWT只要后面的
+
 🔐 添加到 GitHub Secrets
 打开 Fork 后的仓库，进入 Settings -> Secrets and variables -> Actions。
 点击 Repository secrets 分区下的 New repository secret 按钮。
 创建名为 TRAE_AUTH 的 Secret。
 将上一步获取到的 authorization 信息粘贴到 "Secret" 输入框中并保存。
+
 3️⃣ 启用 GitHub Actions 及设置权限
 打开 Fork 后的仓库，进入 Actions 选项卡。如果看到黄色的提示条 "Workflows aren't right ....... enable them"，点击 "I understand my workflows, go ahead and enable them" 按钮启用 Actions。
 重要：设置 Workflow 权限
@@ -37,5 +41,6 @@ GitHub Actions 托管：一键配置后，脚本每天自动运行，实现真�
 ⚠️ 注意事项
 本项目仅供学习交流，请勿用于非法用途。
 频繁手动触发可能会被目标服务限制，请谨慎操作。
+
 📜 免责声明
 本项目为开源项目，作者不对任何因使用本项目产生的后果负责。
