@@ -1,10 +1,17 @@
 import requests
 import os
+import time
+import random
 
 # ---------- 从环境变量读取敏感信息 ----------
-AUTH_TOKEN = os.environ.get('TRAE_AUTH')  # 对应 GitHub Secret 中的 TRAE_AUTH
+AUTH_TOKEN = os.environ.get('TRAE_AUTH')
 if not AUTH_TOKEN:
     raise ValueError("环境变量 TRAE_AUTH 未设置，请在 GitHub Secrets 中配置！")
+
+# ---------- 随机延迟（0 ~ 5 分钟） ----------
+delay_seconds = random.randint(0, 300)
+print(f"⏳ 随机延迟 {delay_seconds} 秒后开始签到...")
+time.sleep(delay_seconds)
 
 # ---------- 定义请求头 ----------
 headers = {
@@ -13,7 +20,7 @@ headers = {
     'Content-Length': '2',
     'accept-encoding': 'gzip, deflate, br, zstd',
     'accept-language': 'zh-CN',
-    'authorization': f'Cloud-IDE-JWT {AUTH_TOKEN}',          # 动态注入
+    'authorization': f'Cloud-IDE-JWT {AUTH_TOKEN}',
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'no-cors',
     'sec-fetch-site': 'none',
@@ -30,18 +37,17 @@ headers = {
     'x-lscbd-aid': '787976',
     'x-lscbd-platform': 'windows',
     'app-version': '0.1.43',
-    'x-cloudide-token': AUTH_TOKEN,                          # 复用同一个 token
+    'x-cloudide-token': AUTH_TOKEN,
 }
 
 # ---------- 发起请求 ----------
 session = requests.Session()
 session.headers.update(headers)
 
-# 第一步：获取第三方 token（可忽略返回值）
-print(f"第一步: 调用获取第三方token接口(此接口不确定对签到是否有影响,先执行再说)...")
+print("📡 第一步：获取第三方 token（预热）...")
 resp1 = session.post('https://api.trae.cn/trae/api/v3/GetThirdPartyToken', json={"Types": ["feishu", "lark"]})
-print(f"第一步完成...")
-# 第二步：签到
-print(f"第二步: 准备签到...")
+# 忽略返回值
+
+print("✅ 第二步：执行签到...")
 resp2 = session.post('https://api.trae.cn/trae/api/v2/ug/checkin_credits/claim', json={})
-print(f"第二步:签到完成，结果 = {resp2.json()}")
+print(f"🎯 签到完成，结果 = {resp2.json()}")
