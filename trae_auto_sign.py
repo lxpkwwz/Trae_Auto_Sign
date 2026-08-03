@@ -1,14 +1,19 @@
 import requests
 import os
 
-# 定义请求头字典
+# ---------- 从环境变量读取敏感信息 ----------
+AUTH_TOKEN = os.environ.get('TRAE_AUTH')  # 对应 GitHub Secret 中的 TRAE_AUTH
+if not AUTH_TOKEN:
+    raise ValueError("环境变量 TRAE_AUTH 未设置，请在 GitHub Secrets 中配置！")
+
+# ---------- 定义请求头 ----------
 headers = {
     'Host': 'api.trae.cn',
     'Connection': 'keep-alive',
     'Content-Length': '2',
     'accept-encoding': 'gzip, deflate, br, zstd',
     'accept-language': 'zh-CN',
-    'authorization': 'Cloud-IDE-JWT eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiMjg5MTAzMTUxNTc2MjcyOCIsInNvdXJjZSI6InJlZnJlc2hfdG9rZW4iLCJzb3VyY2VfaWQiOiJDMXpMMFNrNHZ3VWs3SklBM2YyRmR6ajVDVjBZYUZXRi1IcXZDSTRJeDVFPS4xOGM4MmQ1NzU5OGNlZmE1IiwidGVuYW50X2lkIjoiN28yZDg5NHA3ZHIwbzQiLCJ0eXBlIjoidXNlciJ9LCJleHAiOjE3ODY5MzY3MDUsImlhdCI6MTc4NTcyNzEwNX0.tqrVbMGYZyTRk_j-l6-ZJdB6Jnugt8RrzrJWsece0FoADhBU3khuKynRWXO1czOqKOBwhI8Rn8kPGKw5hrPvh7pPKtkrlMnEBx3jppeg02l0f2gPWsTTZMdS0CUmtHSIEcaQaxhSK2SVPWagWAiAW5R8aYqX07R1R1N3ncPV9DJ4xk898lLaXLK1aVigpX__E_L1z13s89-_Qms3YlgI4AlE5XP7C4ZJ8rnXlBcGhETguRYPSEtO_RyhDZ7vPWB3vd0BO1v20K9Eh985IVOPIsV_y6-3nys3IEhcgZ6oRS8C-J504LfrmtiPX_ZCKqc3BYC_cwXkfa8X2JG7U8dorposiTdI7Y3w7TWSGYXj89BjPzK7KAlht8e2OKQod7QYNEccJINFwowdDsJ-W-0dQAjZaFsaqrDwLy34Pr6sGv9MiqUl3H-0AsHZef14ArxLp63Car20T1b7pvKBbhA_lxvZBdVU4A--Z5ZEyJ4NIis7y3xySPY5DeG7zo5ly8ps5fU8DIm3U-xZ8kMXPTIrfGT_P8FJUCNmyihLfoqu1llMw2-HmuTs-xdrjjFKMQwcQd_zTTGF1GhF4p4OoxwrXCOKnIL_CHFsc6Sl7LQnqVVxlZqhtXBrPh9BQ6-EMcBc9JYTuR8HdRGonwFOkGh-MZezq7E8f5PsjShIV5UCutQ',
+    'authorization': f'Cloud-IDE-JWT {AUTH_TOKEN}',          # 动态注入
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'no-cors',
     'sec-fetch-site': 'none',
@@ -25,13 +30,18 @@ headers = {
     'x-lscbd-aid': '787976',
     'x-lscbd-platform': 'windows',
     'app-version': '0.1.43',
-    'x-cloudide-token': 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoiMjg5MTAzMTUxNTc2MjcyOCIsInNvdXJjZSI6InJlZnJlc2hfdG9rZW4iLCJzb3VyY2VfaWQiOiJDMXpMMFNrNHZ3VWs3SklBM2YyRmR6ajVDVjBZYUZXRi1IcXZDSTRJeDVFPS4xOGM4MmQ1NzU5OGNlZmE1IiwidGVuYW50X2lkIjoiN28yZDg5NHA3ZHIwbzQiLCJ0eXBlIjoidXNlciJ9LCJleHAiOjE3ODY5MzY3MDUsImlhdCI6MTc4NTcyNzEwNX0.tqrVbMGYZyTRk_j-l6-ZJdB6Jnugt8RrzrJWsece0FoADhBU3khuKynRWXO1czOqKOBwhI8Rn8kPGKw5hrPvh7pPKtkrlMnEBx3jppeg02l0f2gPWsTTZMdS0CUmtHSIEcaQaxhSK2SVPWagWAiAW5R8aYqX07R1R1N3ncPV9DJ4xk898lLaXLK1aVigpX__E_L1z13s89-_Qms3YlgI4AlE5XP7C4ZJ8rnXlBcGhETguRYPSEtO_RyhDZ7vPWB3vd0BO1v20K9Eh985IVOPIsV_y6-3nys3IEhcgZ6oRS8C-J504LfrmtiPX_ZCKqc3BYC_cwXkfa8X2JG7U8dorposiTdI7Y3w7TWSGYXj89BjPzK7KAlht8e2OKQod7QYNEccJINFwowdDsJ-W-0dQAjZaFsaqrDwLy34Pr6sGv9MiqUl3H-0AsHZef14ArxLp63Car20T1b7pvKBbhA_lxvZBdVU4A--Z5ZEyJ4NIis7y3xySPY5DeG7zo5ly8ps5fU8DIm3U-xZ8kMXPTIrfGT_P8FJUCNmyihLfoqu1llMw2-HmuTs-xdrjjFKMQwcQd_zTTGF1GhF4p4OoxwrXCOKnIL_CHFsc6Sl7LQnqVVxlZqhtXBrPh9BQ6-EMcBc9JYTuR8HdRGonwFOkGh-MZezq7E8f5PsjShIV5UCutQ'
+    'x-cloudide-token': AUTH_TOKEN,                          # 复用同一个 token
 }
 
+# ---------- 发起请求 ----------
 session = requests.Session()
 session.headers.update(headers)
-# 之后所有请求自动带上这些头
-response = session.post('https://api.trae.cn/trae/api/v3/GetThirdPartyToken', json={"Types": ["feishu", "lark"]})
-# print(response.json())
-response = session.post('https://api.trae.cn/trae/api/v2/ug/checkin_credits/claim', json={})
-print(f"签到完成,结果 = {response.json()}")
+
+# 第一步：获取第三方 token（可忽略返回值）
+print(f"第一步: 调用获取第三方token接口(此接口不确定对签到是否有影响,先执行再说)...")
+resp1 = session.post('https://api.trae.cn/trae/api/v3/GetThirdPartyToken', json={"Types": ["feishu", "lark"]})
+print(f"第一步完成...")
+# 第二步：签到
+print(f"第二步: 准备签到...")
+resp2 = session.post('https://api.trae.cn/trae/api/v2/ug/checkin_credits/claim', json={})
+print(f"第二步:签到完成，结果 = {resp2.json()}")
