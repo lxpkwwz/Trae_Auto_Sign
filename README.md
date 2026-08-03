@@ -1,10 +1,10 @@
 # ⭐️ trae_auto_sign
 
-[![GitHub stars](https://img.shields.io/github/stars/你的用户名/trae_auto_sign?style=social)](https://github.com/你的用户名/trae_auto_sign/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/你的用户名/trae_auto_sign?style=social)](https://github.com/你的用户名/trae_auto_sign/network/members)
-[![License](https://img.shields.io/github/license/你的用户名/trae_auto_sign)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/你的用户名/trae_auto_sign)](https://github.com/你的用户名/trae_auto_sign/commits/main)
-[![GitHub Actions](https://github.com/你的用户名/trae_auto_sign/actions/workflows/签到.yml/badge.svg)](https://github.com/你的用户名/trae_auto_sign/actions)
+[![GitHub stars](https://img.shields.io/github/stars/yung3216/trae_auto_sign?style=social)](https://github.com/yung3216/trae_auto_sign/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/yung3216/trae_auto_sign?style=social)](https://github.com/yung3216/trae_auto_sign/network/members)
+[![License](https://img.shields.io/github/license/yung3216/trae_auto_sign)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/yung3216/trae_auto_sign)](https://github.com/yung3216/trae_auto_sign/commits/main)
+[![GitHub Actions](https://github.com/yung3216/trae_auto_sign/actions/workflows/签到.yml/badge.svg)](https://github.com/yung3216/trae_auto_sign/actions)
 
 🎉 **TraeCN 桌面版自动签到**  
 通过 GitHub Actions 定时执行，每日自动领取签到积分，让你彻底解放双手！
