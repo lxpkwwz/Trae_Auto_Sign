@@ -1,4 +1,4 @@
-# ⭐️ trae_auto_sign
+# ⭐️ Trae_Auto_Sign
 
 🎉 **TraeCN 桌面版自动签到**  
 通过 GitHub Actions 定时执行，每日自动领取签到积分，让你彻底解放双手！
